@@ -93,12 +93,17 @@ const FullscreenDemo = ({ children }: { children: React.ReactNode }) => {
       ref={containerRef}
       style={{
         // minHeight: "300px",
+        // minHeight: "100vh",
         backgroundColor: "#242424",
         // padding: "20px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center",
+        paddingTop: 100,
+        paddingBottom: 30,
+        overflow: isFullscreen ? "auto" : "visible",
+        // width: "100vw",
+        // justifyContent: "center",
         // gap: "16px",
       }}
     >
@@ -107,7 +112,7 @@ const FullscreenDemo = ({ children }: { children: React.ReactNode }) => {
           onClick={toggleFullscreen}
           style={{
             right: 10,
-            position: "absolute",
+            position: "fixed",
             padding: 8,
             width: 40,
             top: 5,

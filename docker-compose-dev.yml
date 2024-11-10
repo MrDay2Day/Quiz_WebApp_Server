@@ -1,0 +1,75 @@
+version: "3.9"
+
+name: ${APP_CONTAINER_NAME}-dev
+services:
+  quiz-web-app:
+    environment:
+      - NODE_ENV=dev
+      - PORT=${PORT}
+      - APP_NAME=${APP_NAME}
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        PORT: ${PORT}
+    networks:
+      - quiz_network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: ${APP_NAME}-Web-App
+    expose:
+      - ${PORT}
+    ports:
+      - "${PORT}:6187"
+    command: npm run dev
+
+  quiz-server:
+    environment:
+      - NODE_ENV=dev
+      - PORT=${SERVER_PORT}
+      - APP_NAME=${APP_NAME}
+    restart: unless-stopped
+    networks:
+      - quiz_network
+    build:
+      context: .
+      dockerfile: Dockerfile.server.dev
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+        PORT: ${SERVER_PORT}
+    volumes:
+      - ./server:/usr/src/app
+      - /usr/src/app/node_modules
+    container_name: ${APP_NAME}-Server
+    expose:
+      - ${SERVER_PORT}
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}"
+    command: npx ts-node-dev --poll --watch ./src/* --respawn ./src/index.ts
+
+  quiz-mysql:
+    image: mysql:8.0
+    container_name: ${APP_NAME}-SQL
+    restart: unless-stopped
+    networks:
+      - quiz_network
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
+      MYSQL_DATABASE: ${MYSQL_DB}
+      # MYSQL_USER: main_user
+      # MYSQL_PASSWORD: user_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "${MYSQL_PORT}:3306"
+
+networks:
+  quiz_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+    driver: local

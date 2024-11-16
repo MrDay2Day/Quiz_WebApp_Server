@@ -12,7 +12,7 @@ import {
 import { Connection } from "mysql2/promise";
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.SERVER_PORT;
 
 async function Server() {
   try {

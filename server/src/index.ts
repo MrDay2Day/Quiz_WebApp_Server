@@ -172,6 +172,8 @@ async function Server() {
     });
   } catch (error) {
     console.log({ error });
+    console.log("Restarting server in 3 seconds");
+    setTimeout(() => Server(), 3000);
   }
 }
 

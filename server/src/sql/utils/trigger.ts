@@ -12,7 +12,7 @@ export async function checkAndCreateMySQLDatabase(
     if (typeof connection === "undefined")
       throw { msg: "MySQL Connection missing." };
 
-    const databaseName: string = process.env.MYSQL_DB || ""; // Replace with your desired database name
+    const databaseName: string = "defaultdb"; // Replace with your desired database name
 
     // Check if the database exists
     const [databases]: [RowDataPacket[], unknown] = await connection.query<

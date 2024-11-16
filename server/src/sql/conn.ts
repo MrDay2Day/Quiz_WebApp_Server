@@ -1,20 +1,27 @@
 import mysql, { Connection, ConnectionOptions } from "mysql2/promise";
 
+const username = "doadmin";
+const password = process.env.MYSQL_PASS || "";
+const host = "quiz-server-do-user-18327375-0.i.db.ondigitalocean.com";
+const port = "25060";
+const database = "defaultdb";
+// const sslmode = "REQUIRED"
+
 export const admin_pool = async () =>
   await getAdminConnection({
-    host: process.env.MYSQL_HOST || "",
-    port: process.env.MYSQL_PORT || "",
-    user: process.env.MYSQL_USER || "",
-    password: process.env.MYSQL_PASS || "",
+    host,
+    port,
+    user: username,
+    password,
   });
 
 export const admin_db_pool = async () =>
   await getAdminConnection({
-    host: process.env.MYSQL_HOST || "",
-    port: process.env.MYSQL_PORT || "",
-    database: process.env.MYSQL_DB || "",
-    user: process.env.MYSQL_USER || "",
-    password: process.env.MYSQL_PASS || "",
+    host,
+    port,
+    database,
+    user: username,
+    password,
   });
 
 async function getAdminConnection({
@@ -44,6 +51,7 @@ async function getAdminConnection({
     port: portNum,
     user,
     password,
+    ssl: { rejectUnauthorized: true },
   };
 
   if (database) {

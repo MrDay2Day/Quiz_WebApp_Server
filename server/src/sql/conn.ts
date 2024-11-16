@@ -3,7 +3,7 @@ import mysql, { Connection, ConnectionOptions } from "mysql2/promise";
 export const admin_pool = async () =>
   await getAdminConnection({
     host: process.env.MYSQL_HOST || "",
-    port: process.env.MYSQL_HOST || "",
+    port: process.env.MYSQL_PORT || "",
     user: process.env.MYSQL_USER || "",
     password: process.env.MYSQL_PASS || "",
   });
@@ -11,7 +11,7 @@ export const admin_pool = async () =>
 export const admin_db_pool = async () =>
   await getAdminConnection({
     host: process.env.MYSQL_HOST || "",
-    port: process.env.MYSQL_HOST || "",
+    port: process.env.MYSQL_PORT || "",
     database: process.env.MYSQL_DB || "",
     user: process.env.MYSQL_USER || "",
     password: process.env.MYSQL_PASS || "",

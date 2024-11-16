@@ -57,14 +57,18 @@ services:
     networks:
       - quiz_network
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_PASS}
-      MYSQL_DATABASE: ${MYSQL_DB}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}
+      - MYSQL_DATABASE=${MYSQL_DB}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - APP_NAME=${APP_NAME}
       # MYSQL_USER: main_user
       # MYSQL_PASSWORD: user_password
     volumes:
       - mysql_data:/var/lib/mysql
     ports:
       - "${MYSQL_PORT}:3306"
+    expose:
+      - ${MYSQL_PORT}
 
 networks:
   quiz_network:

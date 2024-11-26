@@ -1,5 +1,7 @@
 import mysql, { Connection, ConnectionOptions } from "mysql2/promise";
 
+console.log({ db: process.env.MYSQL_DATABASE });
+
 export const admin_pool = async () =>
   await getAdminConnection({
     host: "localhost",
@@ -36,7 +38,7 @@ async function getAdminConnection({
   };
 
   if (database) {
-    connOps.database = process.env.MYSQL_DB;
+    connOps.database = process.env.MYSQL_DATABASE;
   }
   console.log("MySQL Client Connected");
   return await mysql.createConnection(connOps);
